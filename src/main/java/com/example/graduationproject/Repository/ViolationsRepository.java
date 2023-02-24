@@ -13,6 +13,5 @@ public interface ViolationsRepository extends JpaRepository<Violations,Integer> 
 
    Violations findViolationsById(Integer id);
 
-   Violations findViolationsByViolation_type(String violation_type);
 
 }

@@ -22,8 +22,6 @@ public class CustomerService {
 
     // Add Customer :)
     public void AddCustomer(Customer customer){
-        int hour =customer.getRentdate().getDate();
-        System.out.println(hour);
         customerRepository.save(customer);
     }
 

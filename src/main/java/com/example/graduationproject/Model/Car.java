@@ -32,11 +32,18 @@ public class Car {
     private String car_history;
     @NotNull
     private String color;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "booking_id" , referencedColumnName = "id")
+//    @JsonIgnore
+//    private Booking_Order bookingOrder;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id" , referencedColumnName = "id")
-    @JsonIgnore
-    private Booking_Order bookingOrder;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy ="car")
+    private List<Booking_Order> bookingOrderList;
+
 
 
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "cars")

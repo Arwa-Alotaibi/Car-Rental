@@ -36,12 +36,12 @@ public class CarController {
         carService.Delete_car(car_id);
         return ResponseEntity.status(200).body("car deleted!!");
     }
-
-    @PutMapping("/assing/{car_id}/{booking_id}")
-    public ResponseEntity Assign(@PathVariable Integer car_id, @PathVariable Integer booking_id){
-        carService.AsssignCarToBooking(car_id,booking_id);
-        return ResponseEntity.status(200).body("assign successfully!!");
-    }
+//
+//    @PutMapping("/assing/{car_id}/{booking_id}")
+//    public ResponseEntity Assign(@PathVariable Integer car_id, @PathVariable Integer booking_id){
+//        carService.AsssignCarToBooking(car_id,booking_id);
+//        return ResponseEntity.status(200).body("assign successfully!!");
+//    }
 
     @PutMapping("/assign/{carowner_id}/{car_id}")
     public ResponseEntity AssignCarToOwner(@PathVariable Integer car_id , @PathVariable Integer carowner_id){
@@ -53,6 +53,6 @@ public class CarController {
     public ResponseEntity AssignCarToInsuranse(@PathVariable Integer car_id ,@PathVariable Integer insuranse_id){
         carService.AssingInsuranceToCar(car_id,insuranse_id);
         return ResponseEntity.status(200).body("assign successfully!!");
-
     }
+
 }

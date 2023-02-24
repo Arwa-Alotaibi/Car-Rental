@@ -41,10 +41,9 @@ public class Booking_OrderController {
         return ResponseEntity.status(200).body("booking delete");
     }
 
-    @PutMapping("/assign/{customer_id}/{booking_id}")
-    public ResponseEntity assing(@PathVariable Integer customer_id , @PathVariable Integer booking_id){
-        bookingOrderService.AssignBookingToCustomer(customer_id,booking_id);
-        return ResponseEntity.status(200).body("assign ");
-
+    @PutMapping("/assign/{customer_id}/{booking_id}/{car_id}")
+    public ResponseEntity CarRental(@PathVariable Integer customer_id , @PathVariable Integer booking_id,@PathVariable Integer car_id){
+        bookingOrderService.Car_rental(customer_id,booking_id,car_id);
+        return ResponseEntity.status(200).body("The car has been successfully rented :) ");
     }
 }

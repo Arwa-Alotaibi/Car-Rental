@@ -54,16 +54,16 @@ public class CarService {
         }
         carRepository.delete(delete_car);
     }
-
-    public void AsssignCarToBooking(Integer car_id,Integer booking_id){
-        Car car = carRepository.findCarById(car_id);
-        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
-        if(car==null || bookingOrder==null){
-            throw new ApiException("car id not found or booking id id not found");
-        }
-        car.setBookingOrder(bookingOrder);
-        carRepository.save(car);
-    }
+//
+//    public void AsssignCarToBooking(Integer car_id,Integer booking_id){
+//        Car car = carRepository.findCarById(car_id);
+//        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+//        if(car==null || bookingOrder==null){
+//            throw new ApiException("car id not found or booking id id not found");
+//        }
+//        car.setBookingOrder(bookingOrder);
+//        carRepository.save(car);
+//    }
 
 
     public void AssignCarToOwner(Integer car_id , Integer carowner_id){
@@ -86,4 +86,6 @@ public class CarService {
         car.setInsurance(insurance);
         carRepository.save(car);
     }
+
 }
+

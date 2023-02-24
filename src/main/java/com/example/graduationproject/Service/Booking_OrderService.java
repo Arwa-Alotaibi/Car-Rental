@@ -114,6 +114,15 @@ public class Booking_OrderService {
     }
 
 
+    public void cancel_reservation(Integer booking_id, Integer customer_id){
+        Customer customer = customerRepository.findCustomersById(customer_id);
+        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+        if(customer==null || bookingOrder==null){
+            throw new ApiException("customer id not found or booking id ");
+        }
+        customer.getBookingOrderList().remove(bookingOrder);
+    }
+
 
 
 }

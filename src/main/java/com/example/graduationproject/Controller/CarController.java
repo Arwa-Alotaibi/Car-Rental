@@ -1,6 +1,7 @@
 package com.example.graduationproject.Controller;
 
 import com.example.graduationproject.Model.Car;
+import com.example.graduationproject.Model.CarOwner;
 import com.example.graduationproject.Service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,26 @@ public class CarController {
         carService.AssingInsuranceToCar(car_id,insuranse_id);
         return ResponseEntity.status(200).body("assign successfully!!");
     }
+
+    @GetMapping("/ascending")
+    public ResponseEntity ListCarAscendingByPrice(){
+        List<Car> AscendingByPrice = carService.ListCarAscendingByPrice();
+        return ResponseEntity.status(200).body(AscendingByPrice);
+    }
+
+
+    @GetMapping("/dscending")
+    public ResponseEntity ListCarDscendingByPrice(){
+        List<Car> DscendingByPrice = carService.ListCarDscendingByPrice();
+        return ResponseEntity.status(200).body(DscendingByPrice);
+    }
+
+    @GetMapping("/owner/name/{car_id}")
+    public ResponseEntity GetOwnerCar(@PathVariable Integer car_id){
+        String onwer_name = carService.GetOwnerCar(car_id);
+        return ResponseEntity.status(200).body(onwer_name);
+
+    }
+
 
 }

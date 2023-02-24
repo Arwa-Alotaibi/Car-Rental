@@ -35,9 +35,7 @@ public class Booking_Order {
 
     @NotNull
     private double total_days;
-    @Positive
     private double total_price;
-
 
     private double insurance_price;
 

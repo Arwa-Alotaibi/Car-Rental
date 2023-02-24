@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarOwnerRepositry extends JpaRepository<CarOwner,Integer> {
     CarOwner findCarOwnerById(Integer id);
+    CarOwner findCarOwnerByName(String name);
 }
+

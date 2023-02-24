@@ -1,5 +1,6 @@
 package com.example.graduationproject.Controller;
 
+import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.Customer;
 import com.example.graduationproject.Service.CustomerService;
 import jakarta.validation.Valid;
@@ -42,4 +43,9 @@ public class CustomerController {
         return ResponseEntity.status(200).body("customer deleted!");
     }
 
+    @GetMapping("/mycar/{booking_id}")
+    public ResponseEntity Customer_Car(@PathVariable Integer booking_id){
+        Car mycar =customerService.Customer_Car(booking_id);
+        return ResponseEntity.status(200).body(mycar);
+    }
 }

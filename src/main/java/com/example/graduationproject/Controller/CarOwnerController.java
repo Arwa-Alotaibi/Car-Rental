@@ -1,6 +1,7 @@
 package com.example.graduationproject.Controller;
 
 
+import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.CarOwner;
 import com.example.graduationproject.Service.CarOwnerService;
 import jakarta.validation.Valid;
@@ -37,4 +38,9 @@ public class CarOwnerController {
         return ResponseEntity.status(200).body("carOwner deleted");
     }
 
+    @GetMapping("/cars/{owner_name}")
+    public ResponseEntity findAllCarByOwnerName(@PathVariable String owner_name ){
+        List<Car> OwnerCars= carOwnerService.findAllCarByOwnerName(owner_name);
+        return ResponseEntity.status(200).body(OwnerCars);
+    }
 }

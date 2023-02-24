@@ -87,5 +87,24 @@ public class CarService {
         carRepository.save(car);
     }
 
+    //تعرض قائمة في اقل الاسعار
+   public List<Car> ListCarAscendingByPrice(){
+      return carRepository.findByOrderByPriceAsc();
+   }
+    //تعرض قائمة في اعلى الاسعار
+   public List<Car>ListCarDscendingByPrice(){
+        return carRepository.findByOrderByPriceDesc();
+   }
+
+
+   // GetOwnerCar
+    public String GetOwnerCar(Integer car_id){
+        Car car =carRepository.findCarById(car_id);
+        if(car==null){
+            throw new ApiException("car id not found");
+        }
+       return car.getCarOwner().getName();
+    }
+
 }
 

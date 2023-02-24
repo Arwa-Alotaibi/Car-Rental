@@ -10,5 +10,9 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car,Integer> {
     Car findCarById(Integer id);
 
+    List<Car> findByOrderByPriceAsc();
+
+
+    List<Car> findByOrderByPriceDesc();
 
 }

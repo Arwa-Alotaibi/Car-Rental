@@ -46,4 +46,10 @@ public class Booking_OrderController {
         bookingOrderService.Car_rental(customer_id,booking_id,car_id);
         return ResponseEntity.status(200).body("The car has been successfully rented :) ");
     }
+
+    @GetMapping("/cancel/{booking_id}/{customer_id}")
+    public ResponseEntity Cancel(@PathVariable Integer booking_id , @PathVariable Integer customer_id){
+        bookingOrderService.cancel_reservation(booking_id,customer_id);
+        return ResponseEntity.status(200).body("The reservation has been successfully cancelled");
+    }
 }

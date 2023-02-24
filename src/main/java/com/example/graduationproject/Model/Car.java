@@ -32,6 +32,8 @@ public class Car {
     private String car_history;
     @NotNull
     private String color;
+
+
 //
 //    @ManyToOne
 //    @JoinColumn(name = "booking_id" , referencedColumnName = "id")

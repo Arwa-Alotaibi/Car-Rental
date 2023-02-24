@@ -1,7 +1,10 @@
 package com.example.graduationproject.Service;
 
 import com.example.graduationproject.Exception.ApiException;
+import com.example.graduationproject.Model.Booking_Order;
+import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.Customer;
+import com.example.graduationproject.Repository.Booking_OrderRepository;
 import com.example.graduationproject.Repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +14,10 @@ import java.util.List;
 @Service
 public class CustomerService {
     private CustomerRepository customerRepository;
-    public CustomerService(CustomerRepository customerRepository){
+    private Booking_OrderRepository bookingOrderRepository;
+    public CustomerService(CustomerRepository customerRepository, Booking_OrderRepository bookingOrderRepository){
         this.customerRepository=customerRepository;
+        this.bookingOrderRepository=bookingOrderRepository;
     }
 
     //get all customer :)
@@ -52,4 +57,14 @@ public class CustomerService {
         }
         customerRepository.delete(delete_customer);
     }
+    public Car Customer_Car(Integer booking_id){
+        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+        if(bookingOrder==null){
+            throw new ApiException("bookingOrder id not found!!");
+        }
+        return bookingOrder.getCar();
+    }
+
 }
+
+

@@ -1,6 +1,7 @@
 package com.example.graduationproject.Service;
 
 import com.example.graduationproject.Exception.ApiException;
+import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.CarOwner;
 import com.example.graduationproject.Repository.CarOwnerRepositry;
 import lombok.RequiredArgsConstructor;
@@ -56,4 +57,12 @@ public class CarOwnerService {
         carOwnerRepositry.delete(delete_carOwner);
     }
 
+
+    public List<Car>findAllCarByOwnerName(String owner_name){
+        CarOwner carOwner = carOwnerRepositry.findCarOwnerByName(owner_name);
+        if(carOwner==null){
+            throw new ApiException("owner name not found");
+        }
+        return carOwner.getCarList();
+    }
 }

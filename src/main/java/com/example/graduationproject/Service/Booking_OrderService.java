@@ -84,6 +84,31 @@ public class Booking_OrderService {
         }
         bookingOrderRepository.delete(delete_booking);
     }
+    public void Assign(Integer booking_id , Integer car_id ){
+        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+        Car car = carRepository.findCarById(car_id);
+        if(bookingOrder==null ||  car==null){
+            throw new ApiException(" booking id or car id not found");
+        }
+        bookingOrder.setCar(car);
+        bookingOrderRepository.save(bookingOrder);
+    }
+    //Insurance calculation according to the car class
+    public void Insurance_calculation_carclass(Integer booking_id, Integer car_id){
+        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+        Car car = carRepository.findCarById(car_id);
+        if(bookingOrder==null ||  car==null){
+            throw new ApiException(" booking id or car id not found");
+        }
+        if(car.getCar_class().equals("economic")){
+            bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+1000);
+        } else if (car.getCar_class().equals("classic")) {
+            bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+500);
+        }
+        bookingOrder.setTotal_price(bookingOrder.getInsurance_price()+bookingOrder.getTotal_price());
+        bookingOrderRepository.save(bookingOrder);
+
+    }
 
     public void Car_rental(Integer customer_id , Integer booking_id,Integer car_id){
         Customer customer = customerRepository.findCustomersById(customer_id);
@@ -108,7 +133,7 @@ public class Booking_OrderService {
         double All_total = customer.getBalance()-bookingOrder.getTotal_price();
         customer.setBalance(All_total);
         bookingOrder.setCustomer(customer);
-        bookingOrder.setCar(car);
+        //bookingOrder.setCar(car);
         bookingOrderRepository.save(bookingOrder);
         customerRepository.save(customer);
     }
@@ -122,7 +147,5 @@ public class Booking_OrderService {
         }
         customer.getBookingOrderList().remove(bookingOrder);
     }
-
-
 
 }

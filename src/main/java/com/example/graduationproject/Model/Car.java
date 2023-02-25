@@ -3,6 +3,7 @@ package com.example.graduationproject.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Car {
     private double price;
 
     @NotNull
+    @Pattern(regexp = "(classic|economic|none)",message = "the car class should be classic or economic or none")
     private String car_class;
     @NotNull
     private Date available_date;

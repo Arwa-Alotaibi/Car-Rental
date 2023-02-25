@@ -41,6 +41,17 @@ public class Booking_OrderController {
         return ResponseEntity.status(200).body("booking delete");
     }
 
+    @PutMapping("/assingcar/{booking_id}/{car_id}")
+    public ResponseEntity Assing(@PathVariable Integer booking_id ,@PathVariable Integer car_id){
+        bookingOrderService.Assign(booking_id,car_id);
+        return ResponseEntity.status(200).body("assing");
+    }
+    @PutMapping("/insurance/car/{booking_id}/{car_id}")
+    public ResponseEntity Insurance_calculation_carclass(@PathVariable Integer booking_id ,@PathVariable Integer car_id){
+        bookingOrderService.Insurance_calculation_carclass(booking_id,car_id);
+        return ResponseEntity.status(200).body("Car insurance has been added successfully :)");
+    }
+
     @PutMapping("/assign/{customer_id}/{booking_id}/{car_id}")
     public ResponseEntity CarRental(@PathVariable Integer customer_id , @PathVariable Integer booking_id,@PathVariable Integer car_id){
         bookingOrderService.Car_rental(customer_id,booking_id,car_id);

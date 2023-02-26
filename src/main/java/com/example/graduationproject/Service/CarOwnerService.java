@@ -46,7 +46,7 @@ public class CarOwnerService {
         old_carOwner.setReturn_Date(carOwner.getReturn_Date());
         old_carOwner.setPhone_Number(carOwner.getPhone_Number());
         old_carOwner.setEmail(carOwner.getEmail());
-        old_carOwner.setPassword(carOwner.getPassword());
+     //   old_carOwner.setPassword(carOwner.getPassword());
         carOwnerRepositry.save(old_carOwner);
     }
     public void DeleteCarOwner(Integer carOwner_id){

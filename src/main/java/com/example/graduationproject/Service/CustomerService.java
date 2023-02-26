@@ -40,7 +40,7 @@ public class CustomerService {
         old_customer.setName(customer.getName());
         old_customer.setAge(customer.getAge());
         old_customer.setBalance(customer.getBalance());
-        old_customer.setPassword(customer.getPassword());
+        //old_customer.setPassword(customer.getPassword());
         old_customer.setLicense(customer.getLicense());
         old_customer.setEmail_address(customer.getEmail_address());
         old_customer.setRentdate(customer.getRentdate());

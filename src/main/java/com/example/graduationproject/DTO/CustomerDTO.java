@@ -1,9 +1,12 @@
-package com.example.graduationproject.Model;
+package com.example.graduationproject.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,13 +14,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+@Data
+public class CustomerDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,16 @@ public class Customer {
     //  @Column(unique = true)
     private String name;
 
+    private String username;
 
+
+    @Pattern(regexp = "(Owner|Customer)",message = "Role must be in owner or customer only")
+    private String role;
 
     @NotNull
     private int phone_number;
 
+    private String password;
 
     @NotNull(message = "the email should be not null!!")
     @Email(message = "must be a well-formed email address")
@@ -57,17 +63,7 @@ public class Customer {
 
     @Positive(message = "the age should be a positive number!!")
     private int age;
-    @OneToOne(cascade=CascadeType.ALL)
-    @JsonIgnore
-    private MyUser myUser;
 
-
-    @ManyToMany(mappedBy = "customers")
-    private List<Violations> violations_list;
-
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "customer")
-    private List<Booking_Order> bookingOrderList;
 
 
 }

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -58,9 +59,22 @@ public class Booking_OrderController {
         return ResponseEntity.status(200).body("The car has been successfully rented :) ");
     }
 
-    @GetMapping("/cancel/{booking_id}/{customer_id}")
+    @PutMapping ("/cancel/{booking_id}/{customer_id}")
     public ResponseEntity Cancel(@PathVariable Integer booking_id , @PathVariable Integer customer_id){
         bookingOrderService.cancel_reservation(booking_id,customer_id);
         return ResponseEntity.status(200).body("The reservation has been successfully cancelled");
+    }
+    @GetMapping("/check/{customer_id}/{booking_id}/{car_id}/{reservation_date}")
+    public ResponseEntity check_date(@PathVariable Integer customer_id , @PathVariable Integer booking_id, @PathVariable Integer car_id,@PathVariable Date reservation_date){
+        bookingOrderService.IsReserved(customer_id,booking_id,car_id,reservation_date);
+        return ResponseEntity.status(200).body("The reservation has been successfully checked for availability");
+
+
+    }
+    @GetMapping("/payment/{Customer_Choice}/{period}/{booking_id}")
+    public ResponseEntity payment(@PathVariable String customer_choice,@PathVariable int period,@PathVariable Integer booking_id){
+        bookingOrderService.Payment_method(customer_choice,period,booking_id);
+        return ResponseEntity.status(200).body("payment method has been successfully checked");
+
     }
 }

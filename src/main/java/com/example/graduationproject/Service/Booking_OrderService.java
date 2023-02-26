@@ -4,11 +4,14 @@ import com.example.graduationproject.Exception.ApiException;
 import com.example.graduationproject.Model.Booking_Order;
 import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.Customer;
+import com.example.graduationproject.Model.IsReserved;
 import com.example.graduationproject.Repository.Booking_OrderRepository;
 import com.example.graduationproject.Repository.CarRepository;
 import com.example.graduationproject.Repository.CustomerRepository;
+import com.example.graduationproject.Repository.IsReservedRepositry;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,9 @@ public class Booking_OrderService {
 
     private CustomerRepository customerRepository;
     private CarRepository carRepository;
+    private IsReservedRepositry isReservedRepositry;
+
+
 
     public Booking_OrderService(Booking_OrderRepository bookingOrderRepository, CustomerRepository customerRepository,CarRepository carRepository){
         this.bookingOrderRepository=bookingOrderRepository;
@@ -142,10 +148,36 @@ public class Booking_OrderService {
     public void cancel_reservation(Integer booking_id, Integer customer_id){
         Customer customer = customerRepository.findCustomersById(customer_id);
         Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+
         if(customer==null || bookingOrder==null){
             throw new ApiException("customer id not found or booking id ");
         }
         customer.getBookingOrderList().remove(bookingOrder);
+        bookingOrder.getCustomer().getBookingOrderList().remove(customer);
+        bookingOrderRepository.save(bookingOrder);
+        customerRepository.save(customer);
     }
 
+    public void IsReserved(Integer customer_id , Integer booking_id, Integer car_id, Date reserve_date){
+        List<IsReserved> check_date =isReservedRepositry.findAllByCar_Id(car_id);
+        for (IsReserved check:check_date) {
+            if(reserve_date==check.getReserved_Date()){
+                throw new ApiException("this date is already booked");
+            }
+
+        }
+        Car_rental(customer_id,booking_id,car_id);
+    }
+
+    public void Payment_method(String Customer_Choice,int period,Integer booking_id){
+        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
+        double total = bookingOrder.getTotal_price();
+        if(Customer_Choice=="Instalment") {
+            total = total / period;
+            System.out.println("your instalment payment for :" + period + " months will be :" + total + " every " + period + " months");
+        }
+        else
+            System.out.println("your total payment is: "+total);
+
+    }
 }

@@ -12,7 +12,6 @@ public interface CarRepository extends JpaRepository<Car,Integer> {
 
     List<Car> findByOrderByPriceAsc();
 
-
     List<Car> findByOrderByPriceDesc();
 
 }

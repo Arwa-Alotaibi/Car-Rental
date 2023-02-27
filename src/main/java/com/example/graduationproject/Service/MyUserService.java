@@ -90,8 +90,8 @@ public class MyUserService {
         customerService.UpdateCustomer(user_id,customer);
     }
 
-    public void uodate_Owner(OwnerDTO ownerDTO,Integer owner_id, Integer user_id){
-        CarOwner update_owner = carOwnerRepositry.findCarOwnerById(owner_id);
+    public void uodate_Owner(OwnerDTO ownerDTO, Integer user_id){
+        CarOwner update_owner = carOwnerRepositry.findCarOwnerByMyUserId(user_id);
         if(update_owner==null){
             throw new ApiException("owner id not found!!");
         } else if (update_owner.getMyUser().getId()!=user_id) {
@@ -100,11 +100,11 @@ public class MyUserService {
         MyUser myUser =new MyUser();
         myUser.setRole(ownerDTO.getRole());
         myUser.setPassword(ownerDTO.getPassword());
-        myUser.setId(owner_id);
+        myUser.setId(user_id);
         myUser.setUsername(ownerDTO.getUsername());
         myUserRepository.save(myUser);
         CarOwner carOwner = new CarOwner(ownerDTO.getId(),ownerDTO.getName(),ownerDTO.getEmail(),ownerDTO.getPhone_Number(),ownerDTO.getCustomerInfo(),ownerDTO.getCarAvailabilty(),ownerDTO.getBookingRequest(),ownerDTO.getInvoice_Details(),ownerDTO.getReturn_Date(),myUser,null);
-        carOwnerService.UpdateCarOwner(carOwner,owner_id);
+        carOwnerService.UpdateCarOwner(carOwner,user_id);
     }
     public void updateuser(MyUser myUser,Integer user_id){
         MyUser update_user=myUserRepository.findMyUsersById(user_id);

@@ -2,6 +2,7 @@ package com.example.graduationproject.Controller;
 
 import com.example.graduationproject.DTO.CustomerDTO;
 import com.example.graduationproject.DTO.OwnerDTO;
+import com.example.graduationproject.Model.MyUser;
 import com.example.graduationproject.Service.MyUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class MyUserController {
     }
 
     @PutMapping("/update/customer")
-    public ResponseEntity Update_Customer(@Valid @RequestBody CustomerDTO customerDTO , @AuthenticationPrincipal CustomerDTO user_id){
+    public ResponseEntity Update_Customer(@Valid @RequestBody CustomerDTO customerDTO , @AuthenticationPrincipal MyUser user_id){
         myUserService.update_customer(customerDTO, user_id.getId());
         return ResponseEntity.status(200).body("Customer updated :)");
 

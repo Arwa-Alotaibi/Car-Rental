@@ -71,8 +71,8 @@ public class MyUserService {
         myUserRepository.delete(myUser);
     }
 
-    public void update_customer(CustomerDTO customerDTO , Integer customer_id,Integer user_id){
-        Customer updatecustomer = customerRepository.findCustomersById(customer_id);
+    public void update_customer(CustomerDTO customerDTO ,Integer user_id){
+        Customer updatecustomer = customerRepository.findCustomerByMyUserId(user_id);
         MyUser myUser = new MyUser();
         if(updatecustomer==null){
             throw new ApiException("customer id not found!!");
@@ -81,11 +81,13 @@ public class MyUserService {
         }
         myUser.setRole(customerDTO.getRole());
         myUser.setPassword(customerDTO.getPassword());
-        myUser.setId(customer_id);
+        myUser.setId(user_id);
         myUser.setUsername(updatecustomer.getMyUser().getUsername());
+
+        myUserRepository.save(myUser);
         Customer customer =new Customer(customerDTO.getId(),customerDTO.getName(),customerDTO.getPhone_number(), customerDTO.getEmail_address(),customerDTO.getLicense(),customerDTO.getRentdate()
                 ,customerDTO.getReturndate(),customerDTO.getBalance(),customerDTO.getAge(),myUser,null,null);
-        customerService.UpdateCustomer(customer_id,customer);
+        customerService.UpdateCustomer(user_id,customer);
     }
 
     public void uodate_Owner(OwnerDTO ownerDTO,Integer owner_id, Integer user_id){

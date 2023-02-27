@@ -6,6 +6,7 @@ import com.example.graduationproject.Service.MyUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,5 +32,11 @@ public class MyUserController {
         return ResponseEntity.status(200).body("You have been registered successfully :)");
     }
 
+    @PutMapping("/update/customer")
+    public ResponseEntity Update_Customer(@Valid @RequestBody CustomerDTO customerDTO , @AuthenticationPrincipal CustomerDTO user_id){
+        myUserService.update_customer(customerDTO, user_id.getId());
+        return ResponseEntity.status(200).body("Customer updated :)");
+
+    }
 
 }

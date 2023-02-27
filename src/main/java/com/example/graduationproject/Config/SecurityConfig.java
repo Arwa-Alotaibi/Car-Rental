@@ -34,11 +34,9 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"api/v1/users").permitAll()
-                .requestMatchers("/api/v1/users/admin").hasAuthority("Owner")
-                .requestMatchers("/api/v1/user/delete/**" , "/api/v1/todos/todo" ,
-                        "/api/v1/todos/**" , "/api/v1/todos/add/todo" ,"/api/v1/todos/todo/all",
-                        "/api/v1/todos/update/todo/**" , "/api/v1/todos/delete/todo/**","api/v1/users/register/customer").hasAuthority("Customer")
+                .requestMatchers(HttpMethod.POST,"api/v1/users/aa","api/v1/users/register/customer").permitAll()
+                .requestMatchers("/api/v1/users/register/owner").hasAuthority("Owner")
+                .requestMatchers("api/v1/users/register/customer").hasAuthority("Customer")
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")

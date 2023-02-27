@@ -32,6 +32,5 @@ public class MyUserController {
     public ResponseEntity Register_Customer(@Valid @RequestBody CustomerDTO customerDTO){
         myUserService.AddCustomer(customerDTO);
         return ResponseEntity.status(200).body("You have been registered successfully");
-
     }
 }

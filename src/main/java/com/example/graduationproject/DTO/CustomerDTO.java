@@ -24,7 +24,6 @@ public class CustomerDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @NotNull(message = "the name should be not null!1")
     //  @Column(unique = true)
     private String name;

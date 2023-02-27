@@ -6,10 +6,7 @@ import com.example.graduationproject.Service.MyUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,11 +23,13 @@ public class MyUserController {
     @PostMapping("/register/owner")
     public ResponseEntity Register_Owner(@Valid @RequestBody OwnerDTO ownerDTO){
         myUserService.AddOwner(ownerDTO);
-        return ResponseEntity.status(200).body("You have been registered successfully");
+        return ResponseEntity.status(200).body("You have been registered successfully :)");
     }
     @PostMapping("/register/customer")
     public ResponseEntity Register_Customer(@Valid @RequestBody CustomerDTO customerDTO){
         myUserService.AddCustomer(customerDTO);
-        return ResponseEntity.status(200).body("You have been registered successfully");
+        return ResponseEntity.status(200).body("You have been registered successfully :)");
     }
+
+
 }

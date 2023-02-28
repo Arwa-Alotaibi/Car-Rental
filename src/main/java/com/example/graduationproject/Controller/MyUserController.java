@@ -32,12 +32,10 @@ public class MyUserController {
         myUserService.AddCustomer(customerDTO);
         return ResponseEntity.status(200).body("You have been registered successfully :)");
     }
-
     @PutMapping("/update/customer")
     public ResponseEntity Update_Customer(@Valid @RequestBody CustomerDTO customerDTO , @AuthenticationPrincipal MyUser user_id){
         myUserService.update_customer(customerDTO, user_id.getId());
         return ResponseEntity.status(200).body("Customer updated :)");
-
     }
 
 }

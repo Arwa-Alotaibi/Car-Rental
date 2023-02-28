@@ -34,9 +34,15 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST).permitAll()
-                .requestMatchers("/api/v1/users/register/owner").hasAuthority("Owner")
-                .requestMatchers("/api/v1/users","api/v1/users/register/customer","api/v1/users/update/customer").hasAuthority("Customer")
+                .requestMatchers("/api/v1/users/register/owner","/api/v1/users/register/customer","/api/v1/users/login","/api/v1/violations").permitAll()
+
+                .requestMatchers("/api/v1/users","/api/v1/cars/add","/api/v1/cars/update/**","/api/v1/cars/delete/**","/api/v1/insurance/add","/api/v1/cars/assign/car/**","/api/v1/violations/assing/customer/**").hasAuthority("Owner")
+
+                .requestMatchers("/api/v1/users","api/v1/users/update/customer","/api/v1/booking/rent/**","/api/v1/booking/cancel/**","/api/v1/booking/check/**","/api/v1/booking/payment/**","/api/v1/violations/payment/**").hasAuthority("Customer")
+
+                .requestMatchers("/api/v1/violations/add","/api/v1/violations/update/**","/api/v1/violations/delete/**","/api/v1/violations/assign","/api/v1/violations/assign/unpaid").hasAnyAuthority("Admin","Owner")
+
+                .requestMatchers("/api/v1/users","/api/v1/booking/all","/api/v1/booking/add","/api/v1/booking/update/**","/api/v1/booking/delete/**","/api/v1/assingcar/**","/api/v1/booking/black_list/**","/api/v1/cars/ascending","/api/v1/cars/dscending","/api/v1/cars/all").hasAnyAuthority("Customer" , "Admin","Owner")
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")

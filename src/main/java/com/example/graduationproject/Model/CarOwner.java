@@ -29,7 +29,8 @@ public class CarOwner {
     private double invoice_Details;
 
     private Date return_Date;
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
+//    @MapsId
     @JsonIgnore
     private MyUser myUser;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "carOwner")

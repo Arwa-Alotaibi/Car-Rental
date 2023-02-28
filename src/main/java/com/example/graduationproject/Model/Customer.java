@@ -57,7 +57,8 @@ public class Customer {
 
     @Positive(message = "the age should be a positive number!!")
     private int age;
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne
+//    @MapsId
     @JsonIgnore
     private MyUser myUser;
 

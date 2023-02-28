@@ -27,6 +27,7 @@ public class CarOwnerController {
         carOwnerService.AddcarOwner(carOwner);
         return ResponseEntity.status(200).body("carOwner added");
     }
+
     @PutMapping("/update/{carOwner_id}")
     public ResponseEntity UpdatecarOwner(@Valid @RequestBody CarOwner carOwner , @PathVariable Integer carOwner_id){
         carOwnerService.UpdateCarOwner(carOwner, carOwner_id);

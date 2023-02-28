@@ -29,7 +29,7 @@ public class MyUser implements UserDetails {
 
 
 
-  @Pattern(regexp = "(Owner|Customer)",message = "Role must be in owner or customer only")
+  @Pattern(regexp = "(Owner|Customer|Admin)",message = "Role must be in owner or customer only")
   private String role;
 
     private String password;

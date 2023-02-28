@@ -44,24 +44,31 @@ public class MyUserService {
         }
 
     public void  AddOwner(OwnerDTO ownerDTO){
-        MyUser user = myUserRepository.findMyUsersByUsername(ownerDTO.getUsername());
-        if(user==null){
-            MyUser myUser =new MyUser();
-            myUser.setRole(ownerDTO.getRole());
-            myUser.setPassword(ownerDTO.getPassword());
-            String hashedPassword=new BCryptPasswordEncoder().encode(myUser.getPassword());
-            myUser.setPassword(hashedPassword);
-            myUser.setUsername(ownerDTO.getUsername());
+//        MyUser user = myUserRepository.findMyUsersByUsername(ownerDTO.getUsername());
+
+        MyUser myUser =new MyUser();
+
+        myUser.setPassword(ownerDTO.getPassword());
+
+        myUser.setRole(ownerDTO.getRole());
+
+        String hashedPassword=new BCryptPasswordEncoder().encode(myUser.getPassword());
+
+        myUser.setPassword(hashedPassword);
+
+        myUser.setUsername(ownerDTO.getUsername());
+        myUserRepository.save(myUser);
 
             CarOwner carOwner = new CarOwner(ownerDTO.getId(),ownerDTO.getName(),ownerDTO.getEmail(),ownerDTO.getPhone_Number(),ownerDTO.getCustomerInfo(),ownerDTO.getCarAvailabilty(),ownerDTO.getBookingRequest(),ownerDTO.getInvoice_Details(),ownerDTO.getReturn_Date(),myUser,null);
             carOwner.setMyUser(myUser);
+
             carOwnerRepositry.save(carOwner);
 
-            myUser.setCarOwner(carOwner);
+        myUser.setCarOwner(carOwner);
             myUserRepository.save(myUser);
+
         }
 
-    }
 
     public void delete_user(Integer user_id){
         MyUser myUser =myUserRepository.findMyUsersById(user_id);
@@ -90,31 +97,6 @@ public class MyUserService {
         customerService.UpdateCustomer(user_id,customer);
     }
 
-    public void uodate_Owner(OwnerDTO ownerDTO, Integer user_id){
-        CarOwner update_owner = carOwnerRepositry.findCarOwnerByMyUserId(user_id);
-        if(update_owner==null){
-            throw new ApiException("owner id not found!!");
-        } else if (update_owner.getMyUser().getId()!=user_id) {
-            throw new ApiException("Sorry , You do not have the authority to update this owner!");
-        }
-        MyUser myUser =new MyUser();
-        myUser.setRole(ownerDTO.getRole());
-        myUser.setPassword(ownerDTO.getPassword());
-        myUser.setId(user_id);
-        myUser.setUsername(ownerDTO.getUsername());
-        myUserRepository.save(myUser);
-        CarOwner carOwner = new CarOwner(ownerDTO.getId(),ownerDTO.getName(),ownerDTO.getEmail(),ownerDTO.getPhone_Number(),ownerDTO.getCustomerInfo(),ownerDTO.getCarAvailabilty(),ownerDTO.getBookingRequest(),ownerDTO.getInvoice_Details(),ownerDTO.getReturn_Date(),myUser,null);
-        carOwnerService.UpdateCarOwner(carOwner,user_id);
-    }
-    public void updateuser(MyUser myUser,Integer user_id){
-        MyUser update_user=myUserRepository.findMyUsersById(user_id);
-        if (update_user==null){
-            throw new ApiException("user id not found!!");
-        }
-        myUser.setId(user_id);
-        myUser.setRole(update_user.getRole());
-        myUser.setPassword(new BCryptPasswordEncoder().encode(myUser.getPassword()));
-        myUserRepository.save(myUser);
-    }
+
 
 }

@@ -1,11 +1,13 @@
 package com.example.graduationproject.Controller;
 
 
+import com.example.graduationproject.Model.MyUser;
 import com.example.graduationproject.Model.Violations;
 import com.example.graduationproject.Repository.ViolationsRepository;
 import com.example.graduationproject.Service.ViolationsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,9 +51,10 @@ public class ViolationsController {
 
     }
 
-  @PutMapping("/payment/{customer_id}/{violation_id}")
-    public ResponseEntity payment_violations(@PathVariable Integer customer_id,@PathVariable Integer violation_id){
-        violationsService.payment_violation(customer_id,violation_id);
+    // only customer
+  @PutMapping("/payment/{violation_id}")
+    public ResponseEntity payment_violations(@PathVariable Integer violation_id,@AuthenticationPrincipal MyUser user){
+        violationsService.payment_violation(user,violation_id);
       return ResponseEntity.status(200).body("Thank you for paying your fine :)");
   }
 

@@ -20,7 +20,6 @@ public class InsuranceController {
         List<Insurance> Insurances = insuranseService.getInsurances();
         return ResponseEntity.status(200).body(Insurances);
     }
-    //Add Customer
     @PostMapping("/add")
     public ResponseEntity AddInsurance(@Valid @RequestBody Insurance insurance){
         insuranseService.AddInsurance(insurance);

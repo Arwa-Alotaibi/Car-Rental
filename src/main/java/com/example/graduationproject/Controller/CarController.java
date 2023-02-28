@@ -2,9 +2,11 @@ package com.example.graduationproject.Controller;
 
 import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.CarOwner;
+import com.example.graduationproject.Model.MyUser;
 import com.example.graduationproject.Service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,19 +24,19 @@ public class CarController {
         return ResponseEntity.status(200).body(carList);
     }
     @PostMapping("/add")
-    public ResponseEntity AddCar(@Valid @RequestBody Car car){
-        carService.AddCar(car);
+    public ResponseEntity AddCar(@Valid @RequestBody Car car, @AuthenticationPrincipal MyUser user){
+        carService.AddCar(user,car);
         return ResponseEntity.status(200).body("car added!!");
     }
     @PutMapping("/update/{car_id}")
-    public ResponseEntity updatecar(@Valid @RequestBody Car car, @PathVariable Integer car_id){
-        carService.updatecar(car_id,car);
+    public ResponseEntity updatecar(@Valid @RequestBody Car car, @PathVariable Integer car_id, @AuthenticationPrincipal MyUser user){
+        carService.updatecar(car_id,car,user);
         return ResponseEntity.status(200).body("car updated!!");
     }
 
     @DeleteMapping("/delete/{car_id}")
-    public ResponseEntity Delee_car(@PathVariable Integer car_id){
-        carService.Delete_car(car_id);
+    public ResponseEntity Delee_car(@PathVariable Integer car_id,@AuthenticationPrincipal MyUser user){
+        carService.Delete_car(car_id,user);
         return ResponseEntity.status(200).body("car deleted!!");
     }
 //
@@ -44,11 +46,12 @@ public class CarController {
 //        return ResponseEntity.status(200).body("assign successfully!!");
 //    }
 
-    @PutMapping("/assign/{carowner_id}/{car_id}")
-    public ResponseEntity AssignCarToOwner(@PathVariable Integer car_id , @PathVariable Integer carowner_id){
-        carService.AssignCarToOwner(car_id,carowner_id);
-        return ResponseEntity.status(200).body("assign successfully!!");
-    }
+//    @PutMapping("/assign/{carowner_id}/{car_id}")
+//    public ResponseEntity AssignCarToOwner(@PathVariable Integer car_id , @PathVariable Integer carowner_id){
+//        carService.AssignCarToOwner(car_id,carowner_id);
+//        return ResponseEntity.status(200).body("assign successfully!!");
+//    }
+
 
     @PutMapping("/assign/car/{car_id}/{insuranse_id}")
     public ResponseEntity AssignCarToInsuranse(@PathVariable Integer car_id ,@PathVariable Integer insuranse_id){

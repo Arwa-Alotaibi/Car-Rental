@@ -1,10 +1,7 @@
 package com.example.graduationproject.Service;
 
 import com.example.graduationproject.Exception.ApiException;
-import com.example.graduationproject.Model.Booking_Order;
-import com.example.graduationproject.Model.Car;
-import com.example.graduationproject.Model.CarOwner;
-import com.example.graduationproject.Model.Insurance;
+import com.example.graduationproject.Model.*;
 import com.example.graduationproject.Repository.Booking_OrderRepository;
 import com.example.graduationproject.Repository.CarOwnerRepositry;
 import com.example.graduationproject.Repository.CarRepository;
@@ -27,17 +24,33 @@ public class CarService {
         this.carOwnerRepositry=carOwnerRepositry;
         this.insuranseRepositry=insuranseRepositry;
     }
+    // all users can see all cars:)
     public List<Car> GetAll(){
         return carRepository.findAll();
     }
 
-    public void AddCar(Car car){
+    //owner only owner can add car :)
+    public void AddCar(MyUser user, Car car){
+        CarOwner owner = carOwnerRepositry.findCarOwnerById(user.getId());
+//       if (user.getRole().equals("Customer")) {
+//            if (car.getCarOwner().getMyUser().getId()!= user.getId()){
+//                throw new ApiException("you do not have auth");
+//            }
+//        }
+        car.setCarOwner(owner);
         carRepository.save(car);
     }
-    public void updatecar(Integer car_id, Car car){
+    //owner only owner can update car :)
+
+    public void updatecar(Integer car_id, Car car,MyUser user){
         Car update_car = carRepository.findCarById(car_id);
         if(update_car==null){
             throw new ApiException("Car id not found");
+        }
+        if (user.getRole().equals("Owner")) {
+            if (update_car.getCarOwner().getMyUser().getId() != user.getId()) {
+                throw new ApiException("you do not have auth");
+            }
         }
         update_car.setCar_class(car.getCar_class());
         update_car.setCar_history(car.getCar_history());
@@ -47,35 +60,22 @@ public class CarService {
         carRepository.save(update_car);
     }
 
-    public void Delete_car(Integer car_id){
+    // only owner can delete car :)
+    public void Delete_car(Integer car_id,MyUser user){
         Car delete_car = carRepository.findCarById(car_id);
         if(delete_car==null){
             throw new ApiException("Car id not found");
         }
+        else  if (user.getRole().equals("Owner")) {
+            if (delete_car.getCarOwner().getMyUser().getId() != user.getId()) {
+                throw new ApiException("you do not have auth");
+            }
+        }
+
         carRepository.delete(delete_car);
     }
-//
-//    public void AsssignCarToBooking(Integer car_id,Integer booking_id){
-//        Car car = carRepository.findCarById(car_id);
-//        Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
-//        if(car==null || bookingOrder==null){
-//            throw new ApiException("car id not found or booking id id not found");
-//        }
-//        car.setBookingOrder(bookingOrder);
-//        carRepository.save(car);
-//    }
 
-
-    public void AssignCarToOwner(Integer car_id , Integer carowner_id){
-        Car car = carRepository.findCarById(car_id);
-        CarOwner carOwner = carOwnerRepositry.findCarOwnerById(carowner_id);
-        if(car==null || carOwner==null){
-            throw new ApiException("car id not found or carOwner id id not found");
-        }
-        car.setCarOwner(carOwner);
-        carRepository.save(car);
-    }
-
+    // only owner can assign
 
     public void  AssingInsuranceToCar(Integer car_id, Integer insuranse_id){
         Car car =carRepository.findCarById(car_id);
@@ -87,6 +87,8 @@ public class CarService {
         carRepository.save(car);
     }
 
+
+    // all users can see asc and des :)
     //تعرض قائمة في اقل الاسعار
    public List<Car> ListCarAscendingByPrice(){
       return carRepository.findByOrderByPriceAsc();

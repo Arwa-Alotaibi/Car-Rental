@@ -1,9 +1,8 @@
 package com.example.graduationproject.Service;
 
 import com.example.graduationproject.Exception.ApiException;
-import com.example.graduationproject.Model.Car;
-import com.example.graduationproject.Model.Customer;
-import com.example.graduationproject.Model.Violations;
+import com.example.graduationproject.Model.*;
+import com.example.graduationproject.Repository.Booking_OrderRepository;
 import com.example.graduationproject.Repository.CarRepository;
 import com.example.graduationproject.Repository.CustomerRepository;
 import com.example.graduationproject.Repository.ViolationsRepository;
@@ -22,17 +21,17 @@ public class ViolationsService {
         this.customerRepository=customerRepository;
         this.carRepository=carRepository;
     }
-    // get all
+    // get all admin - owner
     public List<Violations> AllViolations(){
        return violationsRepository.findAll();
     }
 
-    //Add Violations
+    //only owner and admin
     public void  AddViolations(Violations violations){
         violationsRepository.save(violations);
     }
 
-    //update Violations
+    //only owner and admin
     public void UpdateViolations(Integer violations_id,Violations violations){
         Violations update_violations= violationsRepository.findViolationsById(violations_id);
         if(update_violations==null){
@@ -44,7 +43,7 @@ public class ViolationsService {
         violationsRepository.save(update_violations);
     }
 
-    //delete Violations
+    //only owner and admin
     public void DeleteViolations(Integer violations_id){
         Violations delete_violations= violationsRepository.findViolationsById(violations_id);
         if(delete_violations==null){
@@ -54,7 +53,7 @@ public class ViolationsService {
     }
 
 
-    // only car_owner assign
+    // only owner and admin
     public void  AssignViolationsToCustomer(Integer customer_id,Integer violation_id ){
         Customer customer = customerRepository.findCustomersById(customer_id);
         Violations violations = violationsRepository.findViolationsById(violation_id);
@@ -67,20 +66,28 @@ public class ViolationsService {
         customerRepository.save(customer);
     }
 
-    public void payment_violation(Integer customer_id,Integer violation_id){
-        Customer customer = customerRepository.findCustomersById(customer_id);
+    // customer onlyy
+    public void payment_violation(MyUser user, Integer violation_id){
+        Customer customer = customerRepository.findCustomersById(user.getId());
         Violations violations = violationsRepository.findViolationsById(violation_id);
 
-        if(violations ==null || customer==null  ){
+        if(violations ==null ){
             throw new ApiException("violations id not found or customer id not found");
         }
         //حطيتها لأنه يسوي دفع وهو مافيه ربط بينهم
         else if(customer.getViolations_list().isEmpty()){
             throw new ApiException("The customer has no violations");
         }
-       else if(customer.getBalance()< violations.getPenality_fee()){
+//        else if (user.getRole().equals("Customer")) {
+//            if (violations.getCustomer().getMyUser().getId()!= user.getId()){
+//                throw new ApiException("you do not have auth");
+//            }
+//        }
+
+        else if(customer.getBalance()< violations.getPenality_fee()){
             throw new ApiException("You can't pay the fine because your balance is low !! ");
         }
+
         customer.setBalance(customer.getBalance()-violations.getPenality_fee());
         customer.getViolations_list().remove(violations);
         violations.getCustomers().remove(customer);
@@ -109,6 +116,7 @@ public class ViolationsService {
         }
         return violations.getCustomers();
     }
+
 
 
 

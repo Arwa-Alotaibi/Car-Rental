@@ -42,11 +42,11 @@ public class Customer {
     private String license;
 
 
-    @NotNull(message = "the rentdate should be not null!!")
+//    @NotNull(message = "the rentdate should be not null!!")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date rentdate;
 
-    @NotNull(message = "the returndate should be not null!!")
+//    @NotNull(message = "the returndate should be not null!!")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date returndate;
 

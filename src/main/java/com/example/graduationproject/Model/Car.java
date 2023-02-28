@@ -28,11 +28,8 @@ public class Car {
     @NotNull
     @Pattern(regexp = "(classic|economic|none)",message = "the car class should be classic or economic or none")
     private String car_class;
-    @NotNull
     private Date available_date;
-    @NotNull
     private String car_history;
-    @NotNull
     private String color;
 
 

@@ -32,11 +32,15 @@ public class ViolationsService {
     }
 
     //only owner and admin
-    public void UpdateViolations(Integer violations_id,Violations violations){
+    public void UpdateViolations(Integer violations_id,Violations violations,MyUser user){
         Violations update_violations= violationsRepository.findViolationsById(violations_id);
         if(update_violations==null){
-            throw new ApiException("violations id not found");
-        }
+            throw new ApiException("violations id not found");}
+
+          else if(user.getCarOwner().getMyUser().getId()!=user.getId()){
+               throw new ApiException("you have no authorty");
+           }
+
         update_violations.setViolation_date(violations.getViolation_date());
         update_violations.setViolation_type(violations.getViolation_type());
         update_violations.setPenality_fee(violations.getPenality_fee());
@@ -44,21 +48,26 @@ public class ViolationsService {
     }
 
     //only owner and admin
-    public void DeleteViolations(Integer violations_id){
+    public void DeleteViolations(Integer violations_id,MyUser myUser){
         Violations delete_violations= violationsRepository.findViolationsById(violations_id);
         if(delete_violations==null){
             throw new ApiException("violations id not found");
+        }
+        else if(myUser.getCarOwner().getMyUser().getId()!=myUser.getId()){
+            throw new ApiException("you have no authorty");
         }
         violationsRepository.delete(delete_violations);
     }
 
 
     // only owner and admin
-    public void  AssignViolationsToCustomer(Integer customer_id,Integer violation_id ){
+    public void  AssignViolationsToCustomer(Integer customer_id,Integer violation_id ,MyUser myUser){
         Customer customer = customerRepository.findCustomersById(customer_id);
         Violations violations = violationsRepository.findViolationsById(violation_id);
         if(violations ==null || customer==null){
             throw new ApiException("violations id not found or customer id not found");
+        }else if(myUser.getCarOwner().getMyUser().getId()!=myUser.getId()){
+            throw new ApiException("you have no authorty");
         }
         violations.getCustomers().add(customer);
         customer.getViolations_list().add(violations);
@@ -68,21 +77,20 @@ public class ViolationsService {
 
     // customer onlyy
     public void payment_violation(MyUser user, Integer violation_id){
-        Customer customer = customerRepository.findCustomersById(user.getId());
+        Customer customer = customerRepository.findCustomerByMyUserId(user.getId());
         Violations violations = violationsRepository.findViolationsById(violation_id);
 
         if(violations ==null ){
             throw new ApiException("violations id not found or customer id not found");
         }
         //حطيتها لأنه يسوي دفع وهو مافيه ربط بينهم
-        else if(customer.getViolations_list().isEmpty()){
-            throw new ApiException("The customer has no violations");
-        }
-//        else if (user.getRole().equals("Customer")) {
-//            if (violations.getCustomer().getMyUser().getId()!= user.getId()){
-//                throw new ApiException("you do not have auth");
-//            }
+//        else if(customer.getViolations_list().isEmpty()){
+//            throw new ApiException("The customer has no violations");
 //        }
+            if (customer.getMyUser().getId()!= user.getId()){
+                throw new ApiException("you do not have auth");
+            }
+
 
         else if(customer.getBalance()< violations.getPenality_fee()){
             throw new ApiException("You can't pay the fine because your balance is low !! ");
@@ -96,10 +104,12 @@ public class ViolationsService {
 
 
 
-    public void AssignViolationsToCar(Integer car_id,Integer violation_id){
+    public void AssignViolationsToCar(Integer car_id,Integer violation_id,MyUser myUser){
         Car car = carRepository.findCarById(car_id);
         Violations violations = violationsRepository.findViolationsById(violation_id);
-
+        if(car.getCarOwner().getId()!= myUser.getId()){
+            throw new ApiException("you have no authority");
+        }
         if(violations ==null || car==null  ){
             throw new ApiException("violations id not found or car id not found");
         }
@@ -109,8 +119,11 @@ public class ViolationsService {
     }
 
 
-    public List<Customer> ListOfUnPaidCustomer(Integer violation_id){
+    public List<Customer> ListOfUnPaidCustomer(Integer violation_id,MyUser myUser){
        Violations violations = violationsRepository.findViolationsById(violation_id);
+        if(carRepository.findCarById(myUser.getId()).getCarOwner().getId()!= myUser.getId()){
+            throw new ApiException("you have no authority");
+        }
         if(violations.getCustomers().isEmpty()){
             throw new ApiException("Wow all customers paid the violations :)");
         }

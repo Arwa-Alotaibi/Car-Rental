@@ -27,10 +27,7 @@ public class CarOwnerService {
         return carOwner;
     }
     public void AddcarOwner(CarOwner carOwner){
-        CarOwner carOwner1 = carOwnerRepositry.findCarOwnerById(carOwner.getId());
-//        if(carOwner1==null){
-//            throw new ApiException("carOwner class not found");
-//        }
+
         carOwnerRepositry.save(carOwner);
     }
 
@@ -55,6 +52,7 @@ public class CarOwnerService {
         if(delete_carOwner==null){
             throw new ApiException("car owner id not found!!");
         }
+
         carOwnerRepositry.delete(delete_carOwner);
     }
 

@@ -32,11 +32,7 @@ public class CarService {
     //owner only owner can add car :)
     public void AddCar(MyUser user, Car car){
         CarOwner owner = carOwnerRepositry.findCarOwnerById(user.getId());
-//       if (user.getRole().equals("Customer")) {
-//            if (car.getCarOwner().getMyUser().getId()!= user.getId()){
-//                throw new ApiException("you do not have auth");
-//            }
-//        }
+
         car.setCarOwner(owner);
         carRepository.save(car);
     }

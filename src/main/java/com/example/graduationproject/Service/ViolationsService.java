@@ -84,9 +84,9 @@ public class ViolationsService {
             throw new ApiException("violations id not found or customer id not found");
         }
         //حطيتها لأنه يسوي دفع وهو مافيه ربط بينهم
-//        else if(customer.getViolations_list().isEmpty()){
-//            throw new ApiException("The customer has no violations");
-//        }
+        else if(customer.getViolations_list().isEmpty()){
+            throw new ApiException("The customer has no violations");
+        }
             if (customer.getMyUser().getId()!= user.getId()){
                 throw new ApiException("you do not have auth");
             }

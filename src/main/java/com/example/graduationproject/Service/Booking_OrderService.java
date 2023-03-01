@@ -94,19 +94,20 @@ public class Booking_OrderService {
 
     // customer
     public void Car_rental(Integer user_id , Integer booking_id,Integer car_id){
-        Customer customer = customerRepository.findCustomersById(user_id);
+        Customer customer = customerRepository.findCustomerByMyUserId(user_id);
         Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
         Car car = carRepository.findCarById(car_id);
         boolean check_black_list=black_list(user_id ,booking_id,car_id);
         if (!check_black_list){
             throw new ApiException("this customer black listed");
         }
-         if (customer.getMyUser().getId()!=user_id) {
-            throw new ApiException("you do not have the authority to rent car !");
-        }
-       else if(customer==null || bookingOrder==null ||  car==null){
+         if(bookingOrder==null ||  car==null){
             throw new ApiException("customer id not found or booking id or car id not found");
         }
+        else if (customer.getMyUser().getId()!=user_id) {
+            throw new ApiException("you do not have the authority to rent car !");
+        }
+
         else if (!customer.getViolations_list().isEmpty()){
             throw new ApiException("You can't book a car, pay your violations");
         } else if (customer.getAge()<16) {
@@ -121,8 +122,8 @@ public class Booking_OrderService {
             throw new ApiException("You can't book a car, The amount in your balance is less than the Total_price");
         }
         double All_total = customer.getBalance()-bookingOrder.getTotal_price();
-        customer.setBalance(All_total);
         bookingOrder.setCustomer(customer);
+        customer.setBalance(All_total);
         //bookingOrder.setCar(car);
         bookingOrderRepository.save(bookingOrder);
         customerRepository.save(customer);
@@ -178,8 +179,8 @@ public class Booking_OrderService {
 
     }
     //Admin , owner  customer
-    public boolean black_list(Integer customer_id , Integer booking_id,Integer car_id){
-        Customer customer = customerRepository.findCustomersById(customer_id);
+    public boolean black_list(Integer user_id , Integer booking_id,Integer car_id){
+        Customer customer = customerRepository.findCustomerByMyUserId(user_id);
         Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
         Car car = carRepository.findCarById(car_id);
         if(customer==null ||  bookingOrder==null  ||  car==null){

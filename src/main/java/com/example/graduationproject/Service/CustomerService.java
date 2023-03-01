@@ -59,7 +59,8 @@ public class CustomerService {
         }
         customerRepository.delete(delete_customer);
     }
-    public Car Customer_Car(Integer booking_id){
+    public Car Customer_Car(Integer booking_id,MyUser user){
+        Customer customer = customerRepository.findCustomerByMyUserId(user.getId());
         Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
         if(bookingOrder==null){
             throw new ApiException("bookingOrder id not found!!");

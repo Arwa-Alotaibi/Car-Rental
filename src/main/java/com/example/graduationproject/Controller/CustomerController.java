@@ -2,9 +2,11 @@ package com.example.graduationproject.Controller;
 
 import com.example.graduationproject.Model.Car;
 import com.example.graduationproject.Model.Customer;
+import com.example.graduationproject.Model.MyUser;
 import com.example.graduationproject.Service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +46,8 @@ public class CustomerController {
     }
 
     @GetMapping("/mycar/{booking_id}")
-    public ResponseEntity Customer_Car(@PathVariable Integer booking_id){
-        Car mycar =customerService.Customer_Car(booking_id);
+    public ResponseEntity Customer_Car(@PathVariable Integer booking_id, @AuthenticationPrincipal MyUser user){
+        Car mycar =customerService.Customer_Car(booking_id,user);
         return ResponseEntity.status(200).body(mycar);
     }
 }

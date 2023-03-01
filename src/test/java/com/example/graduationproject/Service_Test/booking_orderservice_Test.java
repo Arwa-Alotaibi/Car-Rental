@@ -42,7 +42,7 @@ public class booking_orderservice_Test {
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(null,"arw",5555,"a@gmail.com","11111",null,null,55.6,16,myUser,null,null);
+        customer = new Customer(null,"arwa",5555,"a@gmail.com","11111",null,null,55.6,16,myUser,null,null);
         myUser = new MyUser(null, "shaima", "Customer", "123",customer , null);
         bookingOrder = new Booking_Order(null, "full", 4, 55.4, 33.4, myUser.getCustomer(), null);
         bookingOrder1 = new Booking_Order(null, "full", 4, 55.4, 33.4, myUser.getCustomer(), null);

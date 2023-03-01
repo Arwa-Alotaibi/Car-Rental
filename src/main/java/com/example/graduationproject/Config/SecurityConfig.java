@@ -40,9 +40,9 @@ public class SecurityConfig {
 
                 .requestMatchers("/api/v1/users","api/v1/users/update/customer","/api/v1/booking/rent/**","/api/v1/booking/cancel/**","/api/v1/booking/check/**","/api/v1/booking/payment/**","/api/v1/violations/payment/**","/api/v1/customers","/api/v1/customers/mycar/**").hasAuthority("Customer")
 
-                .requestMatchers("/api/v1/violations/add","/api/v1/violations/update/**","/api/v1/violations/delete/**","/api/v1/violations/assign","/api/v1/violations/assign/unpaid","/api/v1/isReserved","/api/v1/isReserved/all","/api/v1/isReserved/add","/api/v1/isReserved/update/**").hasAnyAuthority("Admin","Owner")
+                .requestMatchers("/api/v1/violations/add","/api/v1/violations/update/**","/api/v1/violations/delete/**","/api/v1/violations/assign","/api/v1/violations/assign/unpaid","/api/v1/isReserved","/api/v1/isReserved/all","/api/v1/isReserved/add","/api/v1/isReserved/update/**","/api/v1/booking/assingcar/**").hasAnyAuthority("Admin","Owner")
 
-                .requestMatchers("/api/v1/users","/api/v1/booking/all","/api/v1/booking/add","/api/v1/booking/update/**","/api/v1/booking/delete/**","/api/v1/assingcar/**","/api/v1/booking/black_list/**","/api/v1/cars/ascending","/api/v1/cars/dscending","/api/v1/cars/all","/api/v1/cars/owner/name/**").hasAnyAuthority("Customer" , "Admin","Owner")
+                .requestMatchers("/api/v1/users","/api/v1/booking/all","/api/v1/booking/add","/api/v1/booking/update/**","/api/v1/booking/delete/**","/api/v1/booking/black_list/**","/api/v1/cars/ascending","/api/v1/cars/dscending","/api/v1/cars/all","/api/v1/cars/owner/name/**").hasAnyAuthority("Customer" , "Admin","Owner")
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/api/v1/auth/logout")

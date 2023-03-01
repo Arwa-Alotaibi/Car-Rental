@@ -21,12 +21,14 @@ public class Booking_OrderController {
         this.bookingOrderService=bookingOrderService;
     }
 
+    // all admin owner customer can see booking
     @GetMapping("/all")
     public ResponseEntity getall(){
         List<Booking_Order>bookingOrderList=bookingOrderService.Allbooking();
         return ResponseEntity.status(200).body(bookingOrderList);
 
     }
+    // all admin owner customer can see booking
     @PostMapping("/add")
     public ResponseEntity AddBooking(@Valid @RequestBody Booking_Order bookingOrder){
         bookingOrderService.AddBooking(bookingOrder);

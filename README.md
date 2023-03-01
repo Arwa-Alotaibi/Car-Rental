@@ -1,4 +1,4 @@
-# car rental system
+# Amin
 
 # Introduction of the project:
 The trust between contractors is one of the most important principles of the contract, which preserves the rights of the parties and prevents disputes from arising; therefore, "Amin" was chosen as the mediator to preserve the parties' rights

@@ -1,6 +1,7 @@
 # GraduationProject
+
 #Introduction of the project:
-<hr/>
+
 This car rental system project is designed to help customers rent a
 car through an online system. It helps the users to search for cars and book the cars for the time period. It has a
 user-friendly interface which helps the user to check for

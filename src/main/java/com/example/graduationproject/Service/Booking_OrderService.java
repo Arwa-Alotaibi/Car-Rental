@@ -119,6 +119,8 @@ public class Booking_OrderService {
 //        else if (customer.getAge()<16) {
 //            throw new ApiException("You must be over 16 years old");
 //        }
+
+
         else if (bookingOrder.getInsurance_type().equals("Third party insurance")) {
             bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+500);
         } else if (bookingOrder.getInsurance_type().equals("full insurance")) {

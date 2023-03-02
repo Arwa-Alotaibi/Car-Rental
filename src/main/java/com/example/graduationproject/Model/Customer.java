@@ -56,6 +56,7 @@ public class Customer {
 
 
     @Positive(message = "the age should be a positive number!!")
+    @Min(value=16 ,message = "the age should be more than 16")
     private int age;
     @OneToOne
 //    @MapsId

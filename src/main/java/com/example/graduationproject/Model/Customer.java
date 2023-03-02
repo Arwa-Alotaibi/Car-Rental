@@ -3,6 +3,7 @@ package com.example.graduationproject.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -43,12 +45,12 @@ public class Customer {
 
 
 //    @NotNull(message = "the rentdate should be not null!!")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date rentdate;
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDate rentdate;
 
 //    @NotNull(message = "the returndate should be not null!!")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date returndate;
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDate returndate;
 
 
     @Positive(message = "the balance should be a positive number!!")
@@ -56,6 +58,8 @@ public class Customer {
 
 
     @Positive(message = "the age should be a positive number!!")
+    @Min(value=20 ,message = "the age should be more than 20")
+
     private int age;
     @OneToOne
 //    @MapsId

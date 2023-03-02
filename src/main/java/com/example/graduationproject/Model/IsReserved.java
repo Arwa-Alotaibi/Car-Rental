@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -19,7 +20,7 @@ public class IsReserved {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Date reserved_Date;
+    private LocalDate reserved_Date;
 
     @ManyToOne
     @JoinColumn(name="car_id",referencedColumnName = "id")

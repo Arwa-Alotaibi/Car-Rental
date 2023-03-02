@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class CarOwner {
     private String bookingRequest;
     private double invoice_Details;
 
-    private Date return_Date;
+    private LocalDate return_Date;
     @OneToOne
 //    @MapsId
     @JsonIgnore

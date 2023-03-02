@@ -94,7 +94,6 @@ public class CarService {
         return carRepository.findByOrderByPriceDesc();
    }
 
-
    // GetOwnerCar
     public String GetOwnerCar(Integer car_id){
         Car car =carRepository.findCarById(car_id);

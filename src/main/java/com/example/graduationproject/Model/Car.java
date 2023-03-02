@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Car {
     @NotNull
     @Pattern(regexp = "(classic|economic|none)",message = "the car class should be classic or economic or none")
     private String car_class;
-    private Date available_date;
+    private LocalDate available_date;
     private String car_history;
     private String color;
 

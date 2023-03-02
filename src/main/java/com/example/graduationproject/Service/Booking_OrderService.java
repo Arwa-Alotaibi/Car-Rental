@@ -5,6 +5,7 @@ import com.example.graduationproject.Model.*;
 import com.example.graduationproject.Repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +98,10 @@ public class Booking_OrderService {
         Customer customer = customerRepository.findCustomerByMyUserId(user_id);
         Booking_Order bookingOrder = bookingOrderRepository.findBooking_OrderById(booking_id);
         Car car = carRepository.findCarById(car_id);
+//        boolean check_date=IsReserved(customer.getId(),booking_id,car_id,bookingOrder.getCustomer().getRentdate());
+//                if(!check_date){
+//                    throw new ApiException("this date is already taken");
+//                }
         boolean check_black_list=black_list(user_id ,booking_id,car_id);
         if (!check_black_list){
             throw new ApiException("this customer black listed");
@@ -110,9 +115,11 @@ public class Booking_OrderService {
 
         else if (!customer.getViolations_list().isEmpty()){
             throw new ApiException("You can't book a car, pay your violations");
-        } else if (customer.getAge()<16) {
-            throw new ApiException("You must be over 16 years old");
-        } else if (bookingOrder.getInsurance_type().equals("Third party insurance")) {
+        }
+//        else if (customer.getAge()<16) {
+//            throw new ApiException("You must be over 16 years old");
+//        }
+        else if (bookingOrder.getInsurance_type().equals("Third party insurance")) {
             bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+500);
         } else if (bookingOrder.getInsurance_type().equals("full insurance")) {
             bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+100);
@@ -147,19 +154,25 @@ public class Booking_OrderService {
     }
 
     // customer
-    public void IsReserved(Integer customer_id , Integer booking_id, Integer car_id, Date reserve_date){
+    public boolean IsReserved(Integer customer_id , Integer booking_id, Integer car_id, LocalDate reserve_date){
         List<IsReserved> check_date =isReservedRepositry.findAllByCar_Id(car_id);
+        System.out.println(check_date);
         Customer customer = customerRepository.findCustomersById(customer_id);
         if (customer.getMyUser().getId()!=customer_id) {
             throw new ApiException("you do not have the authority to rent car !");
         }
-        for (IsReserved check:check_date) {
-            if(reserve_date==check.getReserved_Date()){
-                throw new ApiException("this date is already booked");
-            }
-
+        if (reserve_date.equals(check_date)){
+//            throw new ApiException("this date is already booked");
+            return false;
         }
-        Car_rental(customer_id,booking_id,car_id);
+//        for (IsReserved check:check_date) {
+//            if(reserve_date==check.getReserved_Date()){
+//                throw new ApiException("this date is already booked");
+//            }
+        return true;
+
+
+//        Car_rental(customer_id,booking_id,car_id);
     }
 // customer
     public void Payment_method(String Customer_Choice,int period,Integer booking_id,Integer customer_id){

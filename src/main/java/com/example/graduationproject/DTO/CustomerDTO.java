@@ -4,15 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -48,12 +46,12 @@ public class CustomerDTO {
 
 
     @NotNull(message = "the rentdate should be not null!!")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date rentdate;
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDate rentdate;
 
     @NotNull(message = "the returndate should be not null!!")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date returndate;
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDate returndate;
 
 
     @Positive(message = "the balance should be a positive number!!")
@@ -61,6 +59,8 @@ public class CustomerDTO {
 
 
     @Positive(message = "the age should be a positive number!!")
+    @Min(value=20 ,message = "the age should be more than 20")
+
     private int age;
 
 

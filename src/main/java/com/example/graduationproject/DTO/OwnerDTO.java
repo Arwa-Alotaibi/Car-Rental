@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -32,5 +33,5 @@ public class OwnerDTO {
     private String bookingRequest;
     private double invoice_Details;
 
-    private Date return_Date;
+    private LocalDate return_Date;
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class Booking_OrderController {
 
     @GetMapping("/check/{booking_id}/{car_id}/{reservation_date}")
 
-    public ResponseEntity check_date( @PathVariable Integer booking_id, @PathVariable Integer car_id,@PathVariable Date reservation_date,@AuthenticationPrincipal MyUser user){
+    public ResponseEntity check_date(@PathVariable Integer booking_id, @PathVariable Integer car_id, @PathVariable LocalDate reservation_date, @AuthenticationPrincipal MyUser user){
         bookingOrderService.IsReserved(user.getId(),booking_id,car_id,reservation_date);
         return ResponseEntity.status(200).body("The reservation has been successfully checked for availability");
 

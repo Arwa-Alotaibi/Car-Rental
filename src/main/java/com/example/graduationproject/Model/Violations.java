@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class Violations {
 
     @NotNull(message = "violation type should be not null!")
     private String violation_type;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date violation_date;
+//    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate violation_date;
 
     @Positive(message = "penality fee should be positive!!")
     private double penality_fee;

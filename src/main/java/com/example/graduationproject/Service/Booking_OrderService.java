@@ -110,9 +110,11 @@ public class Booking_OrderService {
 
         else if (!customer.getViolations_list().isEmpty()){
             throw new ApiException("You can't book a car, pay your violations");
-        } else if (customer.getAge()<16) {
-            throw new ApiException("You must be over 16 years old");
-        } else if (bookingOrder.getInsurance_type().equals("Third party insurance")) {
+        } 
+//         else if (customer.getAge()<16) {
+//             throw new ApiException("You must be over 16 years old");
+//         } 
+        else if (bookingOrder.getInsurance_type().equals("Third party insurance")) {
             bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+500);
         } else if (bookingOrder.getInsurance_type().equals("full insurance")) {
             bookingOrder.setInsurance_price(bookingOrder.getInsurance_price()+100);

@@ -1,4 +1,4 @@
-# Car Rental System(Amin)
+# Car Rental System(Ameen)
 
 # Introduction of the project:
 is a website to help customers rent a car through an online system. It helps the users to search for cars and book the cars for the time period
